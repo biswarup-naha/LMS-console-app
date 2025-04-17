@@ -139,7 +139,9 @@ class Library
     }
 }
 
-class Program
+namespace LMS
+{
+    class Program
 {
     static void Main()
     {
@@ -180,4 +182,4 @@ class Program
 
         Console.WriteLine("Goodbye!");
     }
-}
+}}
