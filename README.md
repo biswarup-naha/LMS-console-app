@@ -1,5 +1,3 @@
-
-```markdown
 # 📚 Console-Based Library Management System
 
 A simple yet functional **Library Management System** built using C# for basic console interaction. This project demonstrates core object-oriented programming concepts, file handling, and basic input validation.
@@ -13,7 +11,7 @@ A simple yet functional **Library Management System** built using C# for basic c
 - 🔍 Search books by title  
 - 📖 Borrow and return books  
 - 💾 Save library data to a `.csv` file  
-- 📂 Load data from file on startup    
+- 📂 Load data from file on startup
 - ❌ Delete books by title  
 - ✔️ Simple input validation for clean user interaction  
 
@@ -30,6 +28,7 @@ A simple yet functional **Library Management System** built using C# for basic c
 ## 🛠️ How to Run
 
 1. **Clone the repository** or download the project folder:
+
    ```bash
    git clone https://github.com/biswarup-naha/LMS-console-app
    ```
@@ -37,6 +36,7 @@ A simple yet functional **Library Management System** built using C# for basic c
 2. **Open the project in Visual Studio** or any C# IDE.
 
 3. **Build and run the project** using:
+
    ```bash
    dotnet run
    ```
@@ -86,4 +86,3 @@ A simple yet functional **Library Management System** built using C# for basic c
 ## 📄 License
 
 This project is licensed for educational use under MIT. Feel free to build upon it.
-
