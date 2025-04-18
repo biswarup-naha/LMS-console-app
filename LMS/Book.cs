@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace LMS
     {
-    internal class Book
+    public class Book
     {
-        private string _title;
-        private string _author;
+        private string? _title;
+        private string? _author;
 
         public required string Title { 
-            get { return _title; } 
+            get => _title; 
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -21,18 +21,23 @@ namespace LMS
                 _title = value;
             }
         }
-        public required string Author {
-            get { return _author; }
+        public required string Author
+        {
+            get => _author;
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
                     throw new ArgumentException("Author cannot be empty.");
-                if(Regex.IsMatch(value, @"\d"))
+                if (Regex.IsMatch(value, @"\d"))
                     throw new ArgumentException("Author name cannot contain numbers.");
                 _author = value;
             }
         }
         public bool IsBorrowed { get; set; }
 
+        public override string ToString()
+        {
+            return $"Title: {Title}, Author: {Author}, Borrowed: {IsBorrowed}";
+        }
     }
 }

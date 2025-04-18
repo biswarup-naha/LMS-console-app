@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace LMS
 {
-    internal class Library
+    public class Library
     {
         public Library() { }
         public List<Book> books = [];
 
-        private const string FilePath = "library.txt";
         public void AddBook()
         {
             Console.Write("enter book title: ");
@@ -23,7 +23,7 @@ namespace LMS
             Console.WriteLine("book added successfully.");
         }
 
-        public void RemoveBook()
+        public void DeleteBook()
         {
             Console.Write("enter book title: ");
             string? title = Console.ReadLine() ?? throw new ArgumentNullException("title cannot be null");
@@ -58,7 +58,7 @@ namespace LMS
 
         public void BorrowBook()
         {
-            Console.Write("enter title to borrow: ");
+            Console.Write("enter book title to borrow: ");
             string? title = Console.ReadLine() ?? throw new ArgumentNullException("title cannot be null");
             Book? bookToBorrow = books.FirstOrDefault(book => book.Title.Equals(title));
             if(bookToBorrow != null)
@@ -79,20 +79,83 @@ namespace LMS
             }
         }
 
-        public void DeleteBook()
+        public void ReturnBook()
         {
-            Console.Write("enter title to delete: ");
+            Console.Write("enter book title to return: ");
             string? title = Console.ReadLine() ?? throw new ArgumentNullException("title cannot be null");
-            Book? bookToDelete = books.FirstOrDefault(book => book.Title.Equals(title));
-            if(bookToDelete != null)
+            Book? bookToReturn = books.FirstOrDefault(book => book.Title.Equals(title));
+            if (bookToReturn != null)
             {
-                books.Remove(bookToDelete);
-                Console.WriteLine("book deleted successfully.");
+                if (!bookToReturn.IsBorrowed)
+                {
+                    Console.WriteLine("book is not borrowed.");
+                }
+                else
+                {
+                    bookToReturn.IsBorrowed = false;
+                    Console.WriteLine("book returned successfully.");
+                }
             }
             else
             {
-                Console.WriteLine("book not found.");
+                Console.WriteLine("book not found!!");
             }
         }
+
+        private readonly string file = "library.csv";
+
+        public void SaveLib()
+        {
+            using StreamWriter sw = new(file);
+            try
+            {
+                {
+                    foreach (var book in books)
+                    {
+                        sw.WriteLine($"{book.Title},{book.Author},{book.IsBorrowed}");
+                    }
+                }
+                Console.WriteLine("library has been saved.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving library: {ex.Message}");
+            }
+        }
+
+        public void LoadLib()
+        {
+            try
+            {
+                if (File.Exists(file))
+                {
+                    StreamReader sr = new(file);
+                    {
+                        string? line;
+                        while ((line = sr.ReadLine()) != null)
+                        {
+                            string[] parts = line.Split(',');
+                            if (parts.Length == 3)
+                            {
+                                string title = parts[0];
+                                string author = parts[1];
+                                bool isBorrowed = bool.Parse(parts[2]);
+                                books.Add(new Book { Title = title, Author = author, IsBorrowed = isBorrowed });
+                            }
+                        }
+                    }
+                    Console.WriteLine("library has been loaded.");
+                }
+                else
+                {
+                    Console.WriteLine("file not found!!");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error loading library: {ex.Message}");
+            }
+        }
+
     }
 }
